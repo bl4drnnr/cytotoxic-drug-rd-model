@@ -279,11 +279,8 @@ def load_or_generate_pde_reference(T=6.0, N=64, solver="semi_implicit"):
         p.infusion_rate = 0.15
 
         dt = 0.01
-        S0, R0, I0, C0 = init_fields(grid)
 
-        result = run_simulation(solver, grid, p, T=T, dt=dt,
-                              S0=S0, R0=R0, I0=I0, C0=C0,
-                              save_every=50)
+        result = run_simulation(solver, grid, p, T=T, dt=dt, save_every=50)
 
         t_arr = np.array([rec["t"] for rec in result["trajectory"]])
         TB_arr = np.array([rec["tumor_burden"] for rec in result["trajectory"]])
@@ -751,10 +748,8 @@ def generate_pde_data_for_dose(p_dose, T=6.0, N=64, base_infusion=0.15):
     p.infusion_rate = base_infusion * p_dose
 
     dt = 0.01
-    S0, R0, I0, C0 = init_fields(grid)
 
-    result = run_simulation("semi_implicit", grid, p, T=T, dt=dt,
-                          S0=S0, R0=R0, I0=I0, C0=C0, save_every=50)
+    result = run_simulation("semi_implicit", grid, p, T=T, dt=dt, save_every=50)
 
     t_arr = np.array([rec["t"] for rec in result["trajectory"]])
     TB_arr = np.array([rec["tumor_burden"] for rec in result["trajectory"]])
